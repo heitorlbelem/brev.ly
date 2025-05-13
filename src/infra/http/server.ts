@@ -4,9 +4,11 @@ import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import { fastify } from 'fastify'
 import {
   hasZodFastifySchemaValidationErrors,
+  jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { createShortenedUrlRoute } from './routes/create-shortened-url'
 
 const server = fastify()
 server.setValidatorCompiler(validatorCompiler)
@@ -29,12 +31,14 @@ server.register(fastifySwagger, {
       version: '1.0.0',
     },
   },
+  transform: jsonSchemaTransform,
 })
 server.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
-
 server.register(fastifyCors, { origin: '*' })
+
+server.register(createShortenedUrlRoute)
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('HTTP Server running!')
