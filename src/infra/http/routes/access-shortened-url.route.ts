@@ -14,7 +14,9 @@ export const accessShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
         tags: ['Shortened URLs'],
         params: getShortenedUrlInputSchema,
         response: {
-          202: z.object({}).describe('Shortened URL deleted successfully'),
+          202: z
+            .object({})
+            .describe('Accesses count for Shortened URL updated successfully'),
           404: z
             .object({ message: z.string() })
             .describe('Shortened URL not found'),
