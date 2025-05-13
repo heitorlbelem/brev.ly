@@ -1,19 +1,20 @@
-import { deleteShortenedUrl } from '@/app/functions/delete-shortened-url'
+import { getShortenedUrl } from '@/app/functions/get-shortened-url'
+import { incrementShortenedUrlAccessesCount } from '@/app/functions/increment-shortened-url-accesses-count'
 import { getShortenedUrlInputSchema } from '@/app/schemas/get-shortned-url-input-schema'
 import { isRight, unwrapEither } from '@/shared/either'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-export const deleteShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
-  server.delete(
-    '/shortened-urls/:shortenedUrl',
+export const accessShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
+  server.put(
+    '/shortened-urls/:shortenedUrl/access',
     {
       schema: {
-        summary: 'Delete a shortened URL',
+        summary: 'Increment accesses count for a shortened URL',
         tags: ['Shortened URLs'],
         params: getShortenedUrlInputSchema,
         response: {
-          204: z.object({}).describe('Shortened URL deleted successfully'),
+          202: z.object({}).describe('Shortened URL deleted successfully'),
           404: z
             .object({ message: z.string() })
             .describe('Shortened URL not found'),
@@ -22,9 +23,9 @@ export const deleteShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
     },
     async (request, reply) => {
       const { shortenedUrl } = request.params
-      const result = await deleteShortenedUrl({ shortenedUrl })
+      const result = await incrementShortenedUrlAccessesCount({ shortenedUrl })
       if (isRight(result)) {
-        return reply.status(204).send()
+        return reply.status(202).send()
       }
 
       const error = unwrapEither(result)

@@ -1,4 +1,5 @@
 import { getShortenedUrl } from '@/app/functions/get-shortened-url'
+import { getShortenedUrlInputSchema } from '@/app/schemas/get-shortned-url-input-schema'
 import { isRight, unwrapEither } from '@/shared/either'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
@@ -10,9 +11,7 @@ export const getShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
       schema: {
         summary: 'Get a shortened URL',
         tags: ['Shortened URLs'],
-        params: z.object({
-          shortenedUrl: z.string().describe('Shortened URL'),
-        }),
+        params: getShortenedUrlInputSchema,
         response: {
           200: z
             .object({

@@ -8,6 +8,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { accessShortenedUrlRoute } from './routes/access-shortened-url.route'
 import { createShortenedUrlRoute } from './routes/create-shortened-url.route'
 import { deleteShortenedUrlRoute } from './routes/delete-shortened-url.route'
 import { getAllShortenedUrlsRoute } from './routes/get-all-shortened-urls.route'
@@ -43,6 +44,7 @@ server.register(createShortenedUrlRoute)
 server.register(getAllShortenedUrlsRoute)
 server.register(getShortenedUrlRoute)
 server.register(deleteShortenedUrlRoute)
+server.register(accessShortenedUrlRoute)
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('HTTP Server running!')

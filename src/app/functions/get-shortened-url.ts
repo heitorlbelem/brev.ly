@@ -3,11 +3,8 @@ import { schema } from '@/infra/db/schemas'
 import { type Either, makeLeft, makeRight } from '@/shared/either'
 import { eq } from 'drizzle-orm'
 
+import type { GetShortenedUrlInput } from '../schemas/get-shortned-url-input-schema'
 import { ShortenedUrlNotFoundError } from './errors/shortened-url-not-found-error'
-
-type GetShortenedUrlInput = {
-  shortenedUrl: string
-}
 
 type GetShortenedUrlOutput = {
   id: string
