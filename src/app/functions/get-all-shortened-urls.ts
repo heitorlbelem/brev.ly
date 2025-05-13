@@ -1,7 +1,7 @@
-import { db, pg } from '@/infra/db'
+import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import { type Either, makeRight } from '@/shared/either'
-import { count, lt } from 'drizzle-orm'
+import { lt } from 'drizzle-orm'
 import type { z } from 'zod'
 import { getAllShortenedUrlsSchema } from '../schemas/get-shortened-urls-schema'
 

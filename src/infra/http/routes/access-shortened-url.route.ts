@@ -1,4 +1,3 @@
-import { getShortenedUrl } from '@/app/functions/get-shortened-url'
 import { incrementShortenedUrlAccessesCount } from '@/app/functions/increment-shortened-url-accesses-count'
 import { getShortenedUrlInputSchema } from '@/app/schemas/get-shortned-url-input-schema'
 import { isRight, unwrapEither } from '@/shared/either'
