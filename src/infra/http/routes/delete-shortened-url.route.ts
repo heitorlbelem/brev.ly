@@ -5,13 +5,13 @@ import { z } from 'zod'
 
 export const deleteShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
   server.delete(
-    '/shortened-urls/:id',
+    '/shortened-urls/:shortenedUrl',
     {
       schema: {
         summary: 'Delete a shortened URL',
         tags: ['Shortened URLs'],
         params: z.object({
-          id: z.string().describe('Shortened URL ID'),
+          shortenedUrl: z.string().describe('Shortened URL'),
         }),
         response: {
           204: z.object({}).describe('Shortened URL deleted successfully'),
@@ -22,8 +22,8 @@ export const deleteShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params
-      const result = await deleteShortenedUrl({ id })
+      const { shortenedUrl } = request.params
+      const result = await deleteShortenedUrl({ shortenedUrl })
       if (isRight(result)) {
         return reply.status(204).send()
       }
