@@ -8,7 +8,8 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { createShortenedUrlRoute } from './routes/create-shortened-url'
+import { createShortenedUrlRoute } from './routes/create-shortened-url.route'
+import { deleteShortenedUrlRoute } from './routes/delete-shortened-url.route'
 
 const server = fastify()
 server.setValidatorCompiler(validatorCompiler)
@@ -19,7 +20,6 @@ server.setErrorHandler((error, request, reply) => {
       message: error.validation.map(e => e.message)[0],
     })
   }
-  // Send error to Sentry/Datadog
   console.error(error)
   return reply.status(500).send({ message: 'Internal server error' })
 })
@@ -38,6 +38,7 @@ server.register(fastifySwaggerUi, {
 server.register(fastifyCors, { origin: '*' })
 
 server.register(createShortenedUrlRoute)
+server.register(deleteShortenedUrlRoute)
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('HTTP Server running!')
