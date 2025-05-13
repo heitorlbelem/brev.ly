@@ -16,8 +16,7 @@ server.setSerializerCompiler(serializerCompiler)
 server.setErrorHandler((error, request, reply) => {
   if (hasZodFastifySchemaValidationErrors(error)) {
     return reply.status(400).send({
-      error: 'Validation error',
-      message: error.validation,
+      message: error.validation.map(e => e.message)[0],
     })
   }
   // Send error to Sentry/Datadog

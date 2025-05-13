@@ -1,5 +1,6 @@
 import { createShortenedUrl } from '@/app/functions/create-shortened-url'
 import { createShortenedUrlSchema } from '@/app/schemas/create-shortened-url-schema'
+import { isRight, unwrapEither } from '@/shared/either'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
@@ -23,11 +24,18 @@ export const createShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
     },
     async (request, reply) => {
       const { originalUrl, shortenedUrl } = request.body
-      const { id } = await createShortenedUrl({
+      const result = await createShortenedUrl({
         originalUrl,
         shortenedUrl,
       })
-      return reply.status(201).send({ id })
+      if (isRight(result)) {
+        return reply.status(201).send(result.right)
+      }
+      const error = unwrapEither(result)
+      switch (error.constructor.name) {
+        case 'ShortenedUrlAlreadyExistsError':
+          return reply.status(400).send({ message: error.message })
+      }
     }
   )
 }
