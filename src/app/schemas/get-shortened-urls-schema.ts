@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
 export const getAllShortenedUrlsSchema = z.object({
-  page: z.coerce.number().optional().default(1),
+  cursor: z.string().optional(),
   pageSize: z.coerce.number().optional().default(20),
 })

@@ -15,9 +15,7 @@ export const getAllShortenedUrlsRoute: FastifyPluginAsyncZod = async server => {
         response: {
           200: z
             .object({
-              total: z.number(),
-              page: z.number(),
-              pageSize: z.number(),
+              nextCursor: z.string().nullable(),
               urls: z.array(
                 z.object({
                   id: z.string(),
@@ -33,12 +31,12 @@ export const getAllShortenedUrlsRoute: FastifyPluginAsyncZod = async server => {
       },
     },
     async (request, reply) => {
-      const { page, pageSize } = request.query
-      const result = await getAllShortenedUrls({ page, pageSize })
+      const { cursor, pageSize } = request.query
+      const result = await getAllShortenedUrls({ cursor, pageSize })
 
       if (isRight(result)) {
-        const { total, urls } = unwrapEither(result)
-        return reply.status(200).send({ total, page, pageSize, urls })
+        const { nextCursor, urls } = unwrapEither(result)
+        return reply.status(200).send({ nextCursor, urls })
       }
     }
   )

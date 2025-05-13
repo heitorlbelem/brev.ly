@@ -1,14 +1,14 @@
-import { db } from '@/infra/db'
+import { db, pg } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import { type Either, makeRight } from '@/shared/either'
-import { count } from 'drizzle-orm'
+import { count, lt } from 'drizzle-orm'
 import type { z } from 'zod'
 import { getAllShortenedUrlsSchema } from '../schemas/get-shortened-urls-schema'
 
-type GetAllShortenedUrlsInput = z.input<typeof getAllShortenedUrlsSchema>
+type GetAllShortenedUrlsInput = z.infer<typeof getAllShortenedUrlsSchema>
 
 type GetAllShortenedUrlsOutput = {
-  total: number
+  nextCursor: string | null
   urls: {
     id: string
     originalUrl: string
@@ -21,26 +21,18 @@ type GetAllShortenedUrlsOutput = {
 export async function getAllShortenedUrls(
   input: GetAllShortenedUrlsInput
 ): Promise<Either<unknown, GetAllShortenedUrlsOutput>> {
-  const { page, pageSize } = getAllShortenedUrlsSchema.parse(input)
-  const [urls, [{ total }]] = await Promise.all([
-    db
-      .select({
-        id: schema.shortenedUrls.id,
-        originalUrl: schema.shortenedUrls.originalUrl,
-        shortenedUrl: schema.shortenedUrls.shortenedUrl,
-        createdAt: schema.shortenedUrls.createdAt,
-        accessesCount: schema.shortenedUrls.accessesCount,
-      })
-      .from(schema.shortenedUrls)
-      .offset((page - 1) * pageSize)
-      .limit(pageSize),
-    db
-      .select({ total: count(schema.shortenedUrls.id) })
-      .from(schema.shortenedUrls),
-  ])
-
+  const { cursor, pageSize } = getAllShortenedUrlsSchema.parse(input)
+  const whereClause = cursor ? lt(schema.shortenedUrls.id, cursor) : undefined
+  const results = await db
+    .select()
+    .from(schema.shortenedUrls)
+    .where(whereClause)
+    .limit(pageSize)
+  const nextCursor = results.length > 0 ? results[results.length - 1].id : null
+  console.log(results)
+  console.log(nextCursor)
   return makeRight({
-    total,
-    urls,
+    urls: results,
+    nextCursor,
   })
 }
