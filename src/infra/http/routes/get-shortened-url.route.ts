@@ -5,13 +5,13 @@ import { z } from 'zod'
 
 export const getShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
   server.get(
-    '/shortened-urls/:id',
+    '/shortened-urls/:shortenedUrl',
     {
       schema: {
         summary: 'Get a shortened URL',
         tags: ['Shortened URLs'],
         params: z.object({
-          id: z.string().describe('Shortened URL ID'),
+          shortenedUrl: z.string().describe('Shortened URL'),
         }),
         response: {
           200: z
@@ -30,8 +30,8 @@ export const getShortenedUrlRoute: FastifyPluginAsyncZod = async server => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params
-      const result = await getShortenedUrl({ id })
+      const { shortenedUrl } = request.params
+      const result = await getShortenedUrl({ shortenedUrl })
       if (isRight(result)) {
         return reply.status(200).send(result.right)
       }
