@@ -29,8 +29,6 @@ export async function getAllShortenedUrls(
     .where(whereClause)
     .limit(pageSize)
   const nextCursor = results.length > 0 ? results[results.length - 1].id : null
-  console.log(results)
-  console.log(nextCursor)
   return makeRight({
     urls: results,
     nextCursor,
