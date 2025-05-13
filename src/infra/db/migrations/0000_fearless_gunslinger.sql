@@ -3,6 +3,7 @@ CREATE TABLE "shortened_urls" (
 	"original_url" text NOT NULL,
 	"shortened_url" text NOT NULL,
 	"accesses_count" integer DEFAULT 0 NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "shortened_urls_shortened_url_unique" UNIQUE("shortened_url")
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
+--> statement-breakpoint
+CREATE UNIQUE INDEX "shortened_url_idx" ON "shortened_urls" USING btree ("shortened_url");

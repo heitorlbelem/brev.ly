@@ -1,5 +1,5 @@
 {
-  "id": "0bf2b084-20fc-456a-a9ec-79d86645cbd2",
+  "id": "a8d708ea-52db-4d22-be26-22665dff9aed",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -41,18 +41,26 @@
           "default": "now()"
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "shortened_urls_shortened_url_unique": {
-          "name": "shortened_urls_shortened_url_unique",
-          "nullsNotDistinct": false,
+      "indexes": {
+        "shortened_url_idx": {
+          "name": "shortened_url_idx",
           "columns": [
-            "shortened_url"
-          ]
+            {
+              "expression": "shortened_url",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
