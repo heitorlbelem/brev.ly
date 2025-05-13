@@ -10,6 +10,8 @@ import {
 } from 'fastify-type-provider-zod'
 import { createShortenedUrlRoute } from './routes/create-shortened-url.route'
 import { deleteShortenedUrlRoute } from './routes/delete-shortened-url.route'
+import { getAllShortenedUrlsRoute } from './routes/get-all-shortened-urls.route'
+import { getShortenedUrlRoute } from './routes/get-shortened-url.route'
 
 const server = fastify()
 server.setValidatorCompiler(validatorCompiler)
@@ -38,6 +40,8 @@ server.register(fastifySwaggerUi, {
 server.register(fastifyCors, { origin: '*' })
 
 server.register(createShortenedUrlRoute)
+server.register(getAllShortenedUrlsRoute)
+server.register(getShortenedUrlRoute)
 server.register(deleteShortenedUrlRoute)
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
