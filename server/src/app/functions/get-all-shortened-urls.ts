@@ -1,7 +1,7 @@
 import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import { type Either, makeRight } from '@/shared/either'
-import { lt } from 'drizzle-orm'
+import { gt } from 'drizzle-orm'
 import type { z } from 'zod'
 import { getAllShortenedUrlsSchema } from '../schemas/get-shortened-urls-schema'
 
@@ -22,7 +22,7 @@ export async function getAllShortenedUrls(
   input: GetAllShortenedUrlsInput
 ): Promise<Either<never, GetAllShortenedUrlsOutput>> {
   const { cursor, pageSize } = getAllShortenedUrlsSchema.parse(input)
-  const whereClause = cursor ? lt(schema.shortenedUrls.id, cursor) : undefined
+  const whereClause = cursor ? gt(schema.shortenedUrls.id, cursor) : undefined
   const results = await db
     .select()
     .from(schema.shortenedUrls)

@@ -24,5 +24,6 @@ export async function incrementShortenedUrlAccessesCount({
       accessesCount: accessesCount + 1,
     })
     .where(eq(schema.shortenedUrls.shortenedUrl, shortenedUrl))
+    .returning()
   return makeRight(null)
 }
