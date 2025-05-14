@@ -20,7 +20,7 @@ type GetAllShortenedUrlsOutput = {
 
 export async function getAllShortenedUrls(
   input: GetAllShortenedUrlsInput
-): Promise<Either<unknown, GetAllShortenedUrlsOutput>> {
+): Promise<Either<never, GetAllShortenedUrlsOutput>> {
   const { cursor, pageSize } = getAllShortenedUrlsSchema.parse(input)
   const whereClause = cursor ? lt(schema.shortenedUrls.id, cursor) : undefined
   const results = await db
