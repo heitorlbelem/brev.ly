@@ -1,3 +1,4 @@
+import { DownloadSimple } from "phosphor-react";
 import logo from "../assets/logo.svg";
 
 export function Home() {
@@ -64,9 +65,10 @@ export function Home() {
 
 					<button
 						type="button"
-						className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm text-sm leading-sm font-semibold"
+						className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm"
 					>
-						Baixar CSV
+						<DownloadSimple className="text-gray-600" size={16} />
+						<span className="text-sm leading-sm font-semibold">Baixar CSV</span>
 					</button>
 				</div>
 				<div className="border-b-[1px] border-gray-300 w-full bg-gray-100 opacity-55" />
