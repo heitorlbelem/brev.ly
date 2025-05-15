@@ -4,8 +4,8 @@ import type { InferInsertModel } from "drizzle-orm"
 import { db } from "@/infra/db"
 
 export const makeShortenedUrl = async (overrides?: Partial<InferInsertModel<typeof schema.shortenedUrls>>) => {
-  const originalUrl = "https://example.com"
-  const shortenedUrl = `example-${randomUUID()}`
+  const originalUrl = overrides?.originalUrl ?? "https://example.com"
+  const shortenedUrl = overrides?.shortenedUrl ?? `example-${randomUUID()}`
   const result = await db.insert(schema.shortenedUrls).values({
     originalUrl,
     shortenedUrl,
