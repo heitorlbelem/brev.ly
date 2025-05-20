@@ -1,3 +1,5 @@
+import * as InputContainer from "../components/input-container";
+
 export function ShortenedUrlForm() {
 	return (
 		<form
@@ -7,34 +9,19 @@ export function ShortenedUrlForm() {
 			<p className="text-lg text-gray-600 leading-lg font-bold">Novo link</p>
 
 			<div className="flex flex-col gap-4">
-				<div className="flex flex-col-reverse gap-2">
-					<input
+				<InputContainer.Root id="original_url">
+					<InputContainer.Label>link original</InputContainer.Label>
+					<InputContainer.Input
 						type="text"
 						id="original_url"
 						placeholder="www.exemplo.com.br"
-						className="peer border border-gray-300 rounded-lg p-4 text-gray-600 text-md leading-md focus:outline-2 focus:outline-blue-base placeholder:text-gray-400"
 					/>
-					<label
-						htmlFor="original_url"
-						className="text-xs text-gray-500 leading-xs uppercase peer-focus:text-blue-base peer-focus:font-bold"
-					>
-						link original
-					</label>
-				</div>
+				</InputContainer.Root>
 
-				<div className="flex flex-col-reverse gap-2">
-					<input
-						type="text"
-						id="shortened_url"
-						className="peer border border-gray-300 rounded-lg p-4 text-gray-600 text-md leading-md focus:outline-2 focus:outline-blue-base placeholder:text-gray-400"
-					/>
-					<label
-						htmlFor="shortened_url"
-						className="text-xs text-gray-500 leading-xs uppercase bg-white px-1 transition-all peer-focus:text-blue-base peer-focus:font-bold"
-					>
-						link encurtado
-					</label>
-				</div>
+				<InputContainer.Root id="shortened_url" prefix="brev.ly/">
+					<InputContainer.Label>link encurtado</InputContainer.Label>
+					<InputContainer.Input type="text" id="shortened_url" />
+				</InputContainer.Root>
 			</div>
 
 			<button
