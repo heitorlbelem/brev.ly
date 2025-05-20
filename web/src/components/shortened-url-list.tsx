@@ -99,16 +99,12 @@ export function ShortenedUrlList() {
 				<Scroll.Root type="scroll">
 					<Scroll.Viewport className="max-h-[480px] overflow-hidden">
 						<div className="flex flex-col">
-							{Array.from(urls).map((url) => {
+							{urls.map((url) => {
 								return (
-									<>
-										<Divider key={url.id} />
-										<ShortenedUrlListItem
-											key={url.id}
-											urlId={url.id}
-											url={url}
-										/>
-									</>
+									<div key={url.id}>
+										<Divider />
+										<ShortenedUrlListItem urlId={url.id} url={url} />
+									</div>
 								);
 							})}
 						</div>
