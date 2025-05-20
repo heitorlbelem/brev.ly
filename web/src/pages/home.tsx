@@ -3,12 +3,16 @@ import logo from "../assets/logo.svg";
 
 export function Home() {
 	return (
-		<div className="w-full min-h-full py-8 px-3 flex flex-col gap-6 items-center">
-			<img src={logo} alt="brev.ly logo" className="max-w-28 max-h-8" />
+		<div className="w-full min-h-full max-w-[1024px] py-8 px-3 grid grid-cols-1 gap-6 mx-auto items-center lg:grid-cols-3">
+			<img
+				src={logo}
+				alt="brev.ly logo"
+				className="max-w-28 max-h-8 lg:col-span-3"
+			/>
 
 			<form
 				action=""
-				className="w-full flex flex-col gap-5 bg-white p-6 rounded-lg"
+				className="w-full flex flex-col gap-5 bg-white p-6 rounded-lg lg:col-span-1"
 			>
 				<p className="text-lg text-gray-600 leading-lg font-bold">Novo link</p>
 
@@ -51,7 +55,7 @@ export function Home() {
 				</button>
 			</form>
 
-			<div className="w-full flex flex-col gap-5 bg-white p-6 rounded-lg">
+			<div className="w-full flex flex-col gap-5 bg-white p-6 rounded-lg lg:col-span-2 lg:self-start">
 				<div className="flex items-center justify-between">
 					<p className="text-lg text-gray-600 leading-lg font-bold">
 						Meus links
