@@ -1,8 +1,9 @@
+import * as Scroll from "@radix-ui/react-scroll-area";
 import { DownloadSimple, Link } from "phosphor-react";
 import { ShortenedUrlListItem } from "./shortened-url-list-item";
 
 export function ShortenedUrlList() {
-	const isUrlsListEmpty = true;
+	const isUrlsListEmpty = false;
 	const urls = [
 		{
 			id: "1",
@@ -46,6 +47,27 @@ export function ShortenedUrlList() {
 			createdAt: new Date(),
 			accessesCount: 245,
 		},
+		{
+			id: "7",
+			originalUrl: "https://www.exemplo7.com.br",
+			shortenedUrl: "brev.ly/stu901",
+			createdAt: new Date(),
+			accessesCount: 0,
+		},
+		{
+			id: "8",
+			originalUrl: "https://www.exemplo8.com.br",
+			shortenedUrl: "brev.ly/vwx234",
+			createdAt: new Date(),
+			accessesCount: 5,
+		},
+		{
+			id: "9",
+			originalUrl: "https://www.exemplo9.com.br",
+			shortenedUrl: "brev.ly/yza567",
+			createdAt: new Date(),
+			accessesCount: 100,
+		},
 	];
 
 	return (
@@ -70,17 +92,16 @@ export function ShortenedUrlList() {
 					</p>
 				</div>
 			) : (
-				urls.map((url, idx) => (
-					<>
-						<ShortenedUrlListItem key={url.id} urlId={url.id} url={url} />
-						{idx === urls.length - 1 ? null : (
-							<div
-								key={url.id}
-								className="border-b-[1px] border-gray-300 w-full bg-gray-100 opacity-55"
-							/>
-						)}
-					</>
-				))
+				<Scroll.Root type="scroll">
+					<Scroll.Viewport className="max-h-[280px] overflow-hidden">
+						{Array.from(urls).map((url) => {
+							return (
+								<ShortenedUrlListItem key={url.id} urlId={url.id} url={url} />
+							);
+						})}
+					</Scroll.Viewport>
+					<Scroll.Scrollbar className="flex w-0 " orientation="vertical" />
+				</Scroll.Root>
 			)}
 		</div>
 	);
