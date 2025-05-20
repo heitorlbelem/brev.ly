@@ -1,6 +1,7 @@
 import * as Scroll from "@radix-ui/react-scroll-area";
 import { DownloadSimple, Link } from "phosphor-react";
 import { ShortenedUrlListItem } from "./shortened-url-list-item";
+import { ActionButton } from "./ui/action-button";
 import { Divider } from "./ui/divider";
 
 export function ShortenedUrlList() {
@@ -75,14 +76,7 @@ export function ShortenedUrlList() {
 		<div className="w-full flex flex-col  bg-white p-6 rounded-lg lg:col-span-2 lg:self-start">
 			<div className="flex items-center justify-between">
 				<p className="text-lg text-gray-600 leading-lg font-bold">Meus links</p>
-
-				<button
-					type="button"
-					className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm"
-				>
-					<DownloadSimple className="text-gray-600" size={16} />
-					<span className="text-sm leading-sm font-semibold">Baixar CSV</span>
-				</button>
+				<ActionButton icon={DownloadSimple}>Baixar CSV</ActionButton>
 			</div>
 
 			{isUrlsListEmpty ? (

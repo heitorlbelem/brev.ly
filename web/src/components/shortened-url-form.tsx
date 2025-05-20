@@ -26,7 +26,7 @@ export function ShortenedUrlForm() {
 
 			<button
 				type="submit"
-				className="w-full bg-blue-base text-white p-4 rounded-lg text-md leading-md font-semibold"
+				className="w-full bg-blue-base text-white p-4 rounded-lg text-md leading-md font-semibold hover:bg-blue-dark hover:cursor-pointer"
 			>
 				Salvar link
 			</button>

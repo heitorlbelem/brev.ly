@@ -1,4 +1,5 @@
 import { Copy, Trash } from "phosphor-react";
+import { ActionButton } from "./ui/action-button";
 
 type Url = {
 	originalUrl: string;
@@ -19,7 +20,7 @@ export function ShortenedUrlListItem({
 	return (
 		<div id={urlId} className="pr-3 flex items-center justify-between">
 			<div className="flex flex-col gap-1 max-w-[145px] truncate sm:max-w-none sm:truncate-none">
-				<p className="text-blue-base truncate text-md leading-md font-semibold">
+				<p className="text-blue-base border-b border-b-transparent truncate text-md leading-md font-semibold hover:text-blue-dark hover:cursor-pointer hover:border-b-blue-dark">
 					{url.originalUrl}
 				</p>
 				<span className="text-gray-500 truncate text-sm leading-sm">
@@ -35,18 +36,8 @@ export function ShortenedUrlListItem({
 				</span>
 
 				<div className="flex items-center gap-1">
-					<button
-						className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm"
-						type="button"
-					>
-						<Copy />
-					</button>
-					<button
-						className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm"
-						type="button"
-					>
-						<Trash />
-					</button>
+					<ActionButton icon={Copy} />
+					<ActionButton icon={Trash} />
 				</div>
 			</div>
 		</div>
