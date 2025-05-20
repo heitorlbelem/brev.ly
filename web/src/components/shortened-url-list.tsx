@@ -1,6 +1,7 @@
 import * as Scroll from "@radix-ui/react-scroll-area";
 import { DownloadSimple, Link } from "phosphor-react";
 import { ShortenedUrlListItem } from "./shortened-url-list-item";
+import { Divider } from "./ui/divider";
 
 export function ShortenedUrlList() {
 	const isUrlsListEmpty = false;
@@ -71,7 +72,7 @@ export function ShortenedUrlList() {
 	];
 
 	return (
-		<div className="w-full flex flex-col gap-5 bg-white p-6 rounded-lg lg:col-span-2 lg:self-start">
+		<div className="w-full flex flex-col  bg-white p-6 rounded-lg lg:col-span-2 lg:self-start">
 			<div className="flex items-center justify-between">
 				<p className="text-lg text-gray-600 leading-lg font-bold">Meus links</p>
 
@@ -83,20 +84,26 @@ export function ShortenedUrlList() {
 					<span className="text-sm leading-sm font-semibold">Baixar CSV</span>
 				</button>
 			</div>
-			<div className="border-b-[1px] border-gray-300 w-full bg-gray-100 opacity-55" />
+
 			{isUrlsListEmpty ? (
-				<div className="flex flex-col gap-3 items-center p-8">
-					<Link size={32} className="text-gray-400" />
-					<p className="uppercase text-gray-500 text-xs leading-xs">
-						ainda não existem links cadastrados
-					</p>
-				</div>
+				<>
+					<Divider />
+					<div className="flex flex-col gap-3 items-center p-8">
+						<Link size={32} className="text-gray-400" />
+						<p className="uppercase text-gray-500 text-xs leading-xs">
+							ainda não existem links cadastrados
+						</p>
+					</div>
+				</>
 			) : (
 				<Scroll.Root type="scroll">
 					<Scroll.Viewport className="max-h-[280px] overflow-hidden">
 						{Array.from(urls).map((url) => {
 							return (
-								<ShortenedUrlListItem key={url.id} urlId={url.id} url={url} />
+								<>
+									<Divider key={url.id} />
+									<ShortenedUrlListItem key={url.id} urlId={url.id} url={url} />
+								</>
 							);
 						})}
 					</Scroll.Viewport>
