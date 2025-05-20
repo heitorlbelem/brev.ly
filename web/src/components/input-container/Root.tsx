@@ -11,7 +11,7 @@ export function Root({
 }: InputContainerContextProps & { children: ReactNode }) {
 	return (
 		<InputContainerContext.Provider value={{ id, prefix }}>
-			<div className="flex flex-col gap-2">{children}</div>
+			<div className="input-wrapper flex flex-col gap-2">{children}</div>
 		</InputContainerContext.Provider>
 	);
 }
