@@ -12,7 +12,7 @@ export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
 			)}
 			<input
 				id={ctx.id}
-				className={`peer w-full border border-gray-300 rounded-lg p-4 text-gray-600 text-md leading-md focus:outline-none focus:border-blue-base placeholder:text-gray-400 ${ctx.prefix ? "pl-[60px]" : ""}`}
+				className={`peer w-full border border-gray-300 rounded-lg p-4 text-gray-600 text-md leading-md focus:outline-2 focus:outline-blue-base placeholder:text-gray-400 ${ctx.prefix ? "pl-[60px]" : ""}`}
 				{...props}
 			/>
 		</div>
