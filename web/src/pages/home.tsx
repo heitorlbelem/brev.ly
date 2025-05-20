@@ -13,39 +13,33 @@ export function Home() {
 				<p className="text-lg text-gray-600 leading-lg font-bold">Novo link</p>
 
 				<div className="flex flex-col gap-4">
-					<div className="flex flex-col gap-2">
-						<label
-							htmlFor="original_url"
-							className="text-xs text-gray-500 leading-xs uppercase"
-						>
-							link original
-						</label>
+					<div className="flex flex-col-reverse gap-2">
 						<input
 							type="text"
 							id="original_url"
 							placeholder="www.exemplo.com.br"
-							className="border border-gray-300 rounded-lg p-4 text-gray-600 text-md leading-md focus:outline-none focus:border-blue-base placeholder:text-gray-400"
+							className="peer border border-gray-300 rounded-lg p-4 text-gray-600 text-md leading-md focus:outline-2 focus:outline-blue-base placeholder:text-gray-400"
 						/>
+						<label
+							htmlFor="original_url"
+							className="text-xs text-gray-500 leading-xs uppercase peer-focus:text-blue-base peer-focus:font-bold"
+						>
+							link original
+						</label>
 					</div>
 
-					<div className="flex flex-col gap-2">
+					<div className="flex flex-col-reverse gap-2">
+						<input
+							type="text"
+							id="shortened_url"
+							className="peer border border-gray-300 rounded-lg p-4 text-gray-600 text-md leading-md focus:outline-2 focus:outline-blue-base placeholder:text-gray-400"
+						/>
 						<label
 							htmlFor="shortened_url"
-							className="text-xs text-gray-500 leading-xs uppercase"
+							className="text-xs text-gray-500 leading-xs uppercase bg-white px-1 transition-all peer-focus:text-blue-base peer-focus:font-bold"
 						>
 							link encurtado
 						</label>
-						<div className="relative">
-							<span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-md leading-md">
-								brev.ly/
-							</span>
-
-							<input
-								type="text"
-								id="shortened_url"
-								className="pl-[60px] pr-4 py-4 w-full border border-gray-300 rounded-lg p-4 text-gray-600 text-md leading-md focus:outline-none focus:border-blue-base placeholder:text-gray-400"
-							/>
-						</div>
 					</div>
 				</div>
 
