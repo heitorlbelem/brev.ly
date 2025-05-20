@@ -1,7 +1,9 @@
-import { DownloadSimple } from "phosphor-react";
+import { DownloadSimple, Link } from "phosphor-react";
 import logo from "../assets/logo.svg";
 
 export function Home() {
+	const isUrlsListEmpty = true;
+
 	return (
 		<div className="w-full min-h-full max-w-[1024px] py-8 px-3 grid grid-cols-1 gap-6 mx-auto items-center lg:grid-cols-3">
 			<img
@@ -70,6 +72,16 @@ export function Home() {
 					</button>
 				</div>
 				<div className="border-b-[1px] border-gray-300 w-full bg-gray-100 opacity-55" />
+				{isUrlsListEmpty ? (
+					<div className="flex flex-col gap-3 items-center p-8">
+						<Link size={32} className="text-gray-400" />
+						<p className="uppercase text-gray-500 text-xs leading-xs">
+							ainda não existem links cadastrados
+						</p>
+					</div>
+				) : (
+					<p>lista aqui</p>
+				)}
 			</div>
 		</div>
 	);
