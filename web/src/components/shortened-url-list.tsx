@@ -97,17 +97,28 @@ export function ShortenedUrlList() {
 				</>
 			) : (
 				<Scroll.Root type="scroll">
-					<Scroll.Viewport className="max-h-[280px] overflow-hidden">
-						{Array.from(urls).map((url) => {
-							return (
-								<>
-									<Divider key={url.id} />
-									<ShortenedUrlListItem key={url.id} urlId={url.id} url={url} />
-								</>
-							);
-						})}
+					<Scroll.Viewport className="max-h-[480px] overflow-hidden">
+						<div className="flex flex-col">
+							{Array.from(urls).map((url) => {
+								return (
+									<>
+										<Divider key={url.id} />
+										<ShortenedUrlListItem
+											key={url.id}
+											urlId={url.id}
+											url={url}
+										/>
+									</>
+								);
+							})}
+						</div>
 					</Scroll.Viewport>
-					<Scroll.Scrollbar className="flex w-0 " orientation="vertical" />
+					<Scroll.Scrollbar
+						className="flex touch-none select-none bg-white p-0.5 transition-colors duration-[160ms] ease-out hover:bg-blackA5 data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
+						orientation="vertical"
+					>
+						<Scroll.Thumb className="relative flex-1 rounded-[2px] bg-blue-base before:absolute before:left-1/2 before:top-1/2 before:size-full before:min-h-11 before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2" />
+					</Scroll.Scrollbar>
 				</Scroll.Root>
 			)}
 		</div>

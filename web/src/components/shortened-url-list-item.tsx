@@ -17,33 +17,37 @@ export function ShortenedUrlListItem({
 	urlId,
 }: ShortenedUrlListItemProps) {
 	return (
-		<div id={urlId} className="flex items-center justify-between gap-4">
-			<div className="flex flex-col gap-1">
-				<p className="max-w-[157px] truncate sm:max-w-none sm:truncate-none text-blue-base text-md leading-md font-semibold">
+		<div id={urlId} className="pr-3 flex items-center justify-between">
+			<div className="flex flex-col gap-1 max-w-[145px] truncate sm:max-w-none sm:truncate-none">
+				<p className="text-blue-base truncate text-md leading-md font-semibold">
 					{url.originalUrl}
 				</p>
-				<span className="max-w-[157px] truncate sm:max-w-none sm:truncate-none text-gray-500 text-sm leading-sm">
+				<span className="text-gray-500 truncate text-sm leading-sm">
 					{url.shortenedUrl}
 				</span>
 			</div>
 
-			<span className="text-sm text-gray-500 leading-sm">
-				{url.accessesCount === 1 ? "1 acesso" : `${url.accessesCount} acessos`}
-			</span>
+			<div className="flex items-center gap-4">
+				<span className="text-sm text-gray-500 leading-sm">
+					{url.accessesCount === 1
+						? "1 acesso"
+						: `${url.accessesCount} acessos`}
+				</span>
 
-			<div className="flex items-center gap-1">
-				<button
-					className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm"
-					type="button"
-				>
-					<Copy />
-				</button>
-				<button
-					className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm"
-					type="button"
-				>
-					<Trash />
-				</button>
+				<div className="flex items-center gap-1">
+					<button
+						className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm"
+						type="button"
+					>
+						<Copy />
+					</button>
+					<button
+						className="p-2 flex items-center gap-1.5 bg-gray-200 text-gray-500 rounded-sm"
+						type="button"
+					>
+						<Trash />
+					</button>
+				</div>
 			</div>
 		</div>
 	);
