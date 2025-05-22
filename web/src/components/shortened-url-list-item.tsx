@@ -59,7 +59,12 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 				</span>
 
 				<div className="flex items-center gap-1">
-					<ActionButton icon={Copy} />
+					<ActionButton
+						icon={Copy}
+						onClick={() =>
+							url.originalUrl && navigator.clipboard.writeText(url.originalUrl)
+						}
+					/>
 					<ActionButton
 						icon={Trash}
 						onClick={() => {
