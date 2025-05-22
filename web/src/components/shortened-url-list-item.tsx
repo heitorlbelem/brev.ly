@@ -44,6 +44,7 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 			<div className="flex flex-col gap-1 max-w-[145px] truncate sm:max-w-none sm:truncate-none">
 				<Link
 					to={`/${url.shortenedUrl}`}
+					target="_blank"
 					className="text-blue-base border-b border-b-transparent truncate text-md leading-md font-semibold hover:text-blue-dark hover:cursor-pointer hover:border-b-blue-dark"
 				>
 					{`${env.VITE_API_URL}/${url.shortenedUrl}`}
@@ -64,13 +65,16 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 					<ActionButton
 						icon={Copy}
 						onClick={() =>
-							url.originalUrl && navigator.clipboard.writeText(url.originalUrl)
+							url.shortenedUrl &&
+							navigator.clipboard.writeText(url.shortenedUrl)
 						}
 					/>
 					<ActionButton
 						icon={Trash}
 						onClick={() => {
-							deleteShortenedUrlFn({ shortenedUrl: url.shortenedUrl });
+							confirm(
+								`Você tem certeza que deseja excluir o link ${url.shortenedUrl}?`,
+							) && deleteShortenedUrlFn({ shortenedUrl: url.shortenedUrl });
 						}}
 					/>
 				</div>
