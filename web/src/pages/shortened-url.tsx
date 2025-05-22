@@ -1,11 +1,12 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { accessShortenedUrl } from "../api/access-shortened-url";
 import { getShortenedUrl } from "../api/get-shortened-url";
 import logoIcon from "../assets/logo_icon.svg";
 
 export function ShortenedUrl() {
+	const [originalUrl, setOriginalUrl] = useState<string | null>(null);
 	const { shortened_url: shortenedUrl } = useParams<{
 		shortened_url: string;
 	}>();
@@ -20,6 +21,7 @@ export function ShortenedUrl() {
 			const response = await getShortenedUrl({ shortenedUrl });
 			if (response) {
 				const { originalUrl, shortenedUrl } = response;
+				setOriginalUrl(originalUrl);
 				await accessShortenedUrl({ shortenedUrl });
 				window.location.replace(originalUrl);
 				queryClient.invalidateQueries({ queryKey: ["urls"] });
@@ -42,7 +44,7 @@ export function ShortenedUrl() {
 						Não foi redirecionado?{" "}
 						<a
 							className="underline text-blue-base hover:text-blue-dark"
-							href="http://google.com"
+							href={originalUrl ?? "#"}
 						>
 							Acesse aqui
 						</a>
