@@ -29,6 +29,7 @@ export async function getAllShortenedUrls(
 		.select()
 		.from(schema.shortenedUrls)
 		.where(whereClause)
+		.orderBy(schema.shortenedUrls.id)
 		.limit(pageSize);
 	const nextCursor = results.length > 0 ? results[results.length - 1].id : null;
 	return makeRight({
