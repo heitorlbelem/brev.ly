@@ -1,8 +1,33 @@
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { accessShortenedUrl } from "../api/access-shortened-url";
+import { getShortenedUrl } from "../api/get-shortened-url";
 import logoIcon from "../assets/logo_icon.svg";
 
 export function ShortenedUrl() {
-	const { shortened_url } = useParams<{ shortened_url: string }>();
+	const { shortened_url: shortenedUrl } = useParams<{
+		shortened_url: string;
+	}>();
+	const queryClient = useQueryClient();
+
+	if (!shortenedUrl) {
+		return <div>URL não encontrada</div>;
+	}
+
+	useEffect(() => {
+		const fetchUrl = async () => {
+			const response = await getShortenedUrl({ shortenedUrl });
+			if (response) {
+				const { originalUrl, shortenedUrl } = response;
+				await accessShortenedUrl({ shortenedUrl });
+				window.location.replace(originalUrl);
+				queryClient.invalidateQueries({ queryKey: ["urls"] });
+			}
+		};
+
+		fetchUrl();
+	});
 
 	return (
 		<div className="w-full h-full flex flex-col items-center justify-center px-3">

@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { Copy, Trash } from "phosphor-react";
+import { Link } from "react-router-dom";
 import { deleteShortenedUrl } from "../api/delete-shortened-url";
 import type { GetShortenedUrlsResponse } from "../api/get-shortened-urls";
 import { env } from "../env";
@@ -41,9 +42,12 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 	return (
 		<div className="pr-3 flex items-center justify-between">
 			<div className="flex flex-col gap-1 max-w-[145px] truncate sm:max-w-none sm:truncate-none">
-				<p className="text-blue-base border-b border-b-transparent truncate text-md leading-md font-semibold hover:text-blue-dark hover:cursor-pointer hover:border-b-blue-dark">
+				<Link
+					to={`/${url.shortenedUrl}`}
+					className="text-blue-base border-b border-b-transparent truncate text-md leading-md font-semibold hover:text-blue-dark hover:cursor-pointer hover:border-b-blue-dark"
+				>
 					{`${env.VITE_API_URL}/${url.shortenedUrl}`}
-				</p>
+				</Link>
 				<span className="text-gray-500 truncate text-sm leading-sm">
 					{url.originalUrl}
 				</span>
