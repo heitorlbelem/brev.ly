@@ -60,9 +60,6 @@ export function ShortenedUrlList() {
 	function renderEmptyState() {
 		return (
 			<>
-				<button onClick={() => fetchNextPage()} type="button">
-					Clique aqui
-				</button>
 				<Divider />
 				<div className="flex flex-col gap-3 items-center p-8">
 					<Link size={32} className="text-gray-400" />
