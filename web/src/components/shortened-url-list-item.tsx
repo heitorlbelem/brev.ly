@@ -6,21 +6,18 @@ import { env } from "../env";
 import { queryClient } from "../lib/react-query";
 import { ActionButton } from "./ui/action-button";
 
-type Url = {
-	originalUrl: string;
-	shortenedUrl: string;
-	createdAt: string;
-	accessesCount: number;
-};
-
 interface ShortenedUrlListItemProps {
-	url: Url;
+	url: {
+		originalUrl: string;
+		shortenedUrl: string;
+		createdAt: string;
+		accessesCount: number;
+	};
 }
 
 export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 	const { mutateAsync: deleteShortenedUrlFn } = useMutation({
 		mutationFn: deleteShortenedUrl,
-
 		onSuccess: (__, { shortenedUrl }) => {
 			queryClient.setQueryData<{
 				pages: GetShortenedUrlsResponse[];
