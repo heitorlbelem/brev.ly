@@ -1,6 +1,9 @@
+import { useParams } from "react-router-dom";
 import logoIcon from "../assets/logo_icon.svg";
 
 export function ShortenedUrl() {
+	const { shortened_url } = useParams<{ shortened_url: string }>();
+
 	return (
 		<div className="w-full h-full flex flex-col items-center justify-center px-3">
 			<div className="bg-white flex flex-col justify-center items-center gap-6 rounded-lg px-5 py-12">

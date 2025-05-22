@@ -34,7 +34,7 @@ export function ShortenedUrlList() {
 		});
 
 	const urls = data?.pages.flatMap((page) => page.urls) ?? [];
-	const isEmpty = urls.length === 0;
+	const isUrlsListEmpty = urls.length === 0;
 	const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
 	const handleIntersect = useCallback(
@@ -101,12 +101,12 @@ export function ShortenedUrlList() {
 	}
 
 	return (
-		<section className="w-full flex flex-col bg-white p-6 rounded-lg lg:col-span-2 lg:self-start">
+		<section className="w-full flex flex-col bg-white p-6 rounded-lg lg:self-start">
 			<header className="flex items-center justify-between">
 				<p className="text-lg text-gray-600 leading-lg font-bold">Meus links</p>
 				<ActionButton icon={DownloadSimple}>Baixar CSV</ActionButton>
 			</header>
-			{isEmpty ? renderEmptyState() : renderUrlList()}
+			{isUrlsListEmpty ? renderEmptyState() : renderUrlList()}
 		</section>
 	);
 }
