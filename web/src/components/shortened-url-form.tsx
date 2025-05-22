@@ -4,7 +4,7 @@ export function ShortenedUrlForm() {
 	return (
 		<form
 			action=""
-			className="w-full flex flex-col gap-5 bg-white p-6 rounded-lg"
+			className="w-full flex flex-col gap-5 bg-white p-6 rounded-lg self-start"
 		>
 			<p className="text-lg text-gray-600 leading-lg font-bold">Novo link</p>
 
