@@ -4,7 +4,7 @@ import { ActionButton } from "./ui/action-button";
 type Url = {
 	originalUrl: string;
 	shortenedUrl: string;
-	createdAt: Date;
+	createdAt: string;
 	accessesCount: number;
 };
 
