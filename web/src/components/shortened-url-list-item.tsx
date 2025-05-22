@@ -1,4 +1,8 @@
+import { useMutation } from "@tanstack/react-query";
 import { Copy, Trash } from "phosphor-react";
+import { deleteShortenedUrl } from "../api/delete-shortened-url";
+import type { GetShortenedUrlsResponse } from "../api/get-shortened-urls";
+import { queryClient } from "../lib/react-query";
 import { ActionButton } from "./ui/action-button";
 
 type Url = {
@@ -10,15 +14,34 @@ type Url = {
 
 interface ShortenedUrlListItemProps {
 	url: Url;
-	urlId: string;
 }
 
-export function ShortenedUrlListItem({
-	url,
-	urlId,
-}: ShortenedUrlListItemProps) {
+export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
+	const { mutateAsync: deleteShortenedUrlFn } = useMutation({
+		mutationFn: deleteShortenedUrl,
+
+		onSuccess: (__, { shortenedUrl }) => {
+			queryClient.setQueryData<{
+				pages: GetShortenedUrlsResponse[];
+				pageParams: unknown[];
+			}>(["urls"], (oldData) => {
+				if (!oldData) return oldData;
+
+				return {
+					...oldData,
+					pages: oldData.pages.map((page) => ({
+						...page,
+						urls: page.urls.filter(
+							(item) => item.shortenedUrl !== shortenedUrl,
+						),
+					})),
+				};
+			});
+		},
+	});
+
 	return (
-		<div id={urlId} className="pr-3 flex items-center justify-between">
+		<div className="pr-3 flex items-center justify-between">
 			<div className="flex flex-col gap-1 max-w-[145px] truncate sm:max-w-none sm:truncate-none">
 				<p className="text-blue-base border-b border-b-transparent truncate text-md leading-md font-semibold hover:text-blue-dark hover:cursor-pointer hover:border-b-blue-dark">
 					{url.originalUrl}
@@ -37,7 +60,12 @@ export function ShortenedUrlListItem({
 
 				<div className="flex items-center gap-1">
 					<ActionButton icon={Copy} />
-					<ActionButton icon={Trash} />
+					<ActionButton
+						icon={Trash}
+						onClick={() => {
+							deleteShortenedUrlFn({ shortenedUrl: url.shortenedUrl });
+						}}
+					/>
 				</div>
 			</div>
 		</div>

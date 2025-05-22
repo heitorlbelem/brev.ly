@@ -40,8 +40,8 @@ server.register(fastifySwaggerUi, {
 	routePrefix: "/docs",
 });
 server.register(fastifyCors, {
-	origin: "http://localhost:5173",
-	credentials: true,
+	origin: "*",
+	methods: ["GET", "POST", "PUT", "DELETE"],
 });
 
 server.register(createShortenedUrlRoute);

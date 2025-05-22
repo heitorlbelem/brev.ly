@@ -82,7 +82,7 @@ export function ShortenedUrlList() {
 						{urls.map((url) => (
 							<li key={url.id}>
 								<Divider />
-								<ShortenedUrlListItem urlId={url.id} url={url} />
+								<ShortenedUrlListItem url={url} />
 							</li>
 						))}
 						{hasNextPage && <div ref={loadMoreRef} style={{ height: 1 }} />}
