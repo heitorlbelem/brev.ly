@@ -21,15 +21,15 @@ export function ShortenedUrl() {
 			const response = await getShortenedUrl({ shortenedUrl });
 			if (response) {
 				const { originalUrl, shortenedUrl } = response;
-				setOriginalUrl(originalUrl);
 				await accessShortenedUrl({ shortenedUrl });
+				setOriginalUrl(originalUrl);
 				window.location.replace(originalUrl);
 				queryClient.invalidateQueries({ queryKey: ["urls"] });
 			}
 		};
 
 		fetchUrl();
-	});
+	}, [shortenedUrl, queryClient]);
 
 	return (
 		<div className="w-full h-full flex flex-col items-center justify-center px-3">
