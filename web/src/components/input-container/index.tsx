@@ -1,3 +1,4 @@
-export { Root } from "./Root";
-export { Label } from "./Label";
-export { Input } from "./Input";
+export { Root } from "./root";
+export { Label } from "./label";
+export { Input } from "./input";
+export { ValidationError } from "./validation-error";
