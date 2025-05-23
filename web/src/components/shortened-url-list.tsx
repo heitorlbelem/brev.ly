@@ -2,6 +2,7 @@ import * as Scroll from "@radix-ui/react-scroll-area";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { DownloadSimple, Link, Spinner } from "phosphor-react";
 import { useCallback, useEffect, useRef } from "react";
+import { generateReport } from "../api/generate-report";
 import {
 	type GetShortenedUrlsResponse,
 	getUrls,
@@ -50,6 +51,20 @@ export function ShortenedUrlList() {
 		},
 		[fetchNextPage, hasNextPage, isFetchingNextPage],
 	);
+
+	const handleGenerateReport = async () => {
+		const { reportUrl } = await generateReport();
+		try {
+			const link = document.createElement("a");
+			link.href = reportUrl;
+			link.setAttribute("download", `${new Date()}-report.csv`);
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		} catch (error) {
+			console.error("Erro ao gerar o relatório", error);
+		}
+	};
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(handleIntersect, {
@@ -112,7 +127,9 @@ export function ShortenedUrlList() {
 		<div className="w-full flex flex-col bg-white p-6 rounded-lg lg:self-start">
 			<header className="flex items-center justify-between">
 				<p className="text-lg text-gray-600 leading-lg font-bold">Meus links</p>
-				<ActionButton icon={DownloadSimple}>Baixar CSV</ActionButton>
+				<ActionButton icon={DownloadSimple} onClick={handleGenerateReport}>
+					Baixar CSV
+				</ActionButton>
 			</header>
 			{isLoadingUrls ? (
 				<div className="flex gap-2 justify-center items-center p-8">
