@@ -160,7 +160,7 @@ export function ShortenedUrlList() {
 			)}
 			{isLoadingUrls && (
 				<div className="absolute h-full w-full overflow-hidden top-0 left-0 rounded-lg">
-					<div className="absolute top-0 left-0 h-1.5 w-[50%] rounded-lg animate-loading-bar bg-blue-500" />
+					<div className="absolute top-0 left-0 h-1.5 w-[50%] rounded-lg animate-loading-bar bg-blue-dark" />
 				</div>
 			)}
 		</div>

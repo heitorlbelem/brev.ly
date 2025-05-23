@@ -75,7 +75,7 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 
 	return (
 		<div className="pr-3 flex items-center justify-between">
-			<div className="flex flex-col gap-1 max-w-[145px] truncate sm:max-w-none sm:truncate-none">
+			<div className="flex flex-col gap-1 max-w-[145px] lg:max-w-[240px] truncate sm:max-w-none sm:truncate-none">
 				<Link
 					to={`/${url.shortenedUrl}`}
 					target="_blank"
@@ -83,7 +83,7 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 				>
 					{`${env.VITE_FRONTEND_URL}/${url.shortenedUrl}`}
 				</Link>
-				<span className="text-gray-500 truncate text-sm leading-sm">
+				<span className="text-gray-500 max-w-[145px] lg:max-w-[240px] truncate text-sm leading-sm">
 					{url.originalUrl}
 				</span>
 			</div>
