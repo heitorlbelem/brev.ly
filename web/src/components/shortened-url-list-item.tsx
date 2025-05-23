@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { Copy, Trash } from "phosphor-react";
+import { Copy, Info, Trash } from "phosphor-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import { deleteShortenedUrl } from "../api/delete-shortened-url";
 import type { GetShortenedUrlsResponse } from "../api/get-shortened-urls";
 import { env } from "../env";
@@ -39,6 +40,39 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 		},
 	});
 
+	const handleCopyToClipboard = () => {
+		try {
+			navigator.clipboard.writeText(
+				`${env.VITE_FRONTEND_URL}/${url.shortenedUrl}`,
+			);
+			toast.success(
+				<div className="flex w-full h-full items-center gap-2">
+					<div className="flex flex-col gap-1">
+						<p className="text-sm font-bold text-blue-base">
+							{" "}
+							Link copiado com sucesso
+						</p>
+						<span className="font-normal text-sm text-blue-base">
+							O link {url.shortenedUrl} foi copiado para a área de
+							transferência.
+						</span>
+					</div>
+				</div>,
+				{
+					style: {
+						backgroundColor: "#E0F2FE",
+						color: "#1D4ED8",
+						boxShadow: "none",
+						border: "none",
+						gap: "1rem",
+					},
+					duration: 3500,
+					icon: <Info size={18} />,
+				},
+			);
+		} catch (error) {}
+	};
+
 	return (
 		<div className="pr-3 flex items-center justify-between">
 			<div className="flex flex-col gap-1 max-w-[145px] truncate sm:max-w-none sm:truncate-none">
@@ -62,14 +96,7 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 				</span>
 
 				<div className="flex items-center gap-1">
-					<ActionButton
-						onClick={() =>
-							url.shortenedUrl &&
-							navigator.clipboard.writeText(
-								`${env.VITE_FRONTEND_URL}/${url.shortenedUrl}`,
-							)
-						}
-					>
+					<ActionButton onClick={handleCopyToClipboard}>
 						<Copy size={16} className="text-gray-400" />
 					</ActionButton>
 					<ActionButton
