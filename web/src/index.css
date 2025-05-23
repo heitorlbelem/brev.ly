@@ -39,3 +39,16 @@
   --leading-sm: 1rem;
   --leading-xs: 0.875rem;
 }
+
+@keyframes loadingBar {
+  0% {
+    transform: translateX(-90%);
+  }
+  100% {
+    transform: translateX(190%);
+  }
+}
+
+.animate-loading-bar {
+  animation: loadingBar 1.5s ease-in-out infinite alternate;
+}

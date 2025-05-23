@@ -1,7 +1,7 @@
 import * as Scroll from "@radix-ui/react-scroll-area";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { DownloadSimple, Link, Spinner } from "phosphor-react";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { generateReport } from "../api/generate-report";
 import {
 	type GetShortenedUrlsResponse,
@@ -19,6 +19,8 @@ type ShortenedUrlListInfiniteQueryResponse = {
 const PAGE_SIZE = 10;
 
 export function ShortenedUrlList() {
+	const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+
 	const {
 		data,
 		isLoading: isLoadingUrls,
@@ -53,8 +55,9 @@ export function ShortenedUrlList() {
 	);
 
 	const handleGenerateReport = async () => {
-		const { reportUrl } = await generateReport();
 		try {
+			setIsGeneratingReport(true);
+			const { reportUrl } = await generateReport();
 			const link = document.createElement("a");
 			link.href = reportUrl;
 			link.setAttribute("download", `${new Date()}-report.csv`);
@@ -63,6 +66,8 @@ export function ShortenedUrlList() {
 			document.body.removeChild(link);
 		} catch (error) {
 			console.error("Erro ao gerar o relatório", error);
+		} finally {
+			setIsGeneratingReport(false);
 		}
 	};
 
@@ -124,24 +129,39 @@ export function ShortenedUrlList() {
 	}
 
 	return (
-		<div className="w-full flex flex-col bg-white p-6 rounded-lg lg:self-start">
+		<div className="relative w-full flex flex-col bg-white p-6 rounded-lg lg:self-start">
 			<header className="flex items-center justify-between">
 				<p className="text-lg text-gray-600 leading-lg font-bold">Meus links</p>
-				<ActionButton icon={DownloadSimple} onClick={handleGenerateReport}>
+				<ActionButton
+					disabled={isGeneratingReport}
+					onClick={handleGenerateReport}
+				>
+					{isGeneratingReport ? (
+						<Spinner size={16} className="animate-spin" />
+					) : (
+						<DownloadSimple size={16} />
+					)}
 					Baixar CSV
 				</ActionButton>
 			</header>
 			{isLoadingUrls ? (
-				<div className="flex gap-2 justify-center items-center p-8">
-					<Spinner size={32} className="text-gray-400 animate-spin" />
-					<p className="uppercase text-gray-500 text-xs leading-xs">
-						Carregando links...
-					</p>
-				</div>
+				<>
+					<div className="flex gap-2 justify-center items-center p-8">
+						<Spinner size={32} className="text-gray-400 animate-spin" />
+						<p className="uppercase text-gray-500 text-xs leading-xs">
+							Carregando links...
+						</p>
+					</div>
+				</>
 			) : isUrlsListEmpty ? (
 				renderEmptyState()
 			) : (
 				renderUrlList()
+			)}
+			{isLoadingUrls && (
+				<div className="absolute h-full w-full overflow-hidden top-0 left-0 rounded-lg">
+					<div className="absolute top-0 left-0 h-1.5 w-[50%] rounded-lg animate-loading-bar bg-blue-500" />
+				</div>
 			)}
 		</div>
 	);

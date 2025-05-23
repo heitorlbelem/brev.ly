@@ -63,22 +63,24 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 
 				<div className="flex items-center gap-1">
 					<ActionButton
-						icon={Copy}
 						onClick={() =>
 							url.shortenedUrl &&
 							navigator.clipboard.writeText(
 								`${env.VITE_FRONTEND_URL}/${url.shortenedUrl}`,
 							)
 						}
-					/>
+					>
+						<Copy size={16} className="text-gray-400" />
+					</ActionButton>
 					<ActionButton
-						icon={Trash}
 						onClick={() => {
 							confirm(
 								`Você tem certeza que deseja excluir o link ${url.shortenedUrl}?`,
 							) && deleteShortenedUrlFn({ shortenedUrl: url.shortenedUrl });
 						}}
-					/>
+					>
+						<Trash size={16} className="text-gray-400" />
+					</ActionButton>
 				</div>
 			</div>
 		</div>
