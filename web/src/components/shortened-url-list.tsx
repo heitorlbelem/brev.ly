@@ -1,6 +1,6 @@
 import * as Scroll from "@radix-ui/react-scroll-area";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { DownloadSimple, Link } from "phosphor-react";
+import { DownloadSimple, Link, Spinner } from "phosphor-react";
 import { useCallback, useEffect, useRef } from "react";
 import {
 	type GetShortenedUrlsResponse,
@@ -18,20 +18,25 @@ type ShortenedUrlListInfiniteQueryResponse = {
 const PAGE_SIZE = 10;
 
 export function ShortenedUrlList() {
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-		useInfiniteQuery<
-			GetShortenedUrlsResponse,
-			Error,
-			ShortenedUrlListInfiniteQueryResponse,
-			string[],
-			string | null
-		>({
-			queryKey: ["urls"],
-			queryFn: ({ pageParam }) =>
-				getUrls({ pageSize: PAGE_SIZE, cursor: pageParam }),
-			initialPageParam: null,
-			getNextPageParam: (lastPage) => lastPage.meta.nextCursor,
-		});
+	const {
+		data,
+		isLoading: isLoadingUrls,
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+	} = useInfiniteQuery<
+		GetShortenedUrlsResponse,
+		Error,
+		ShortenedUrlListInfiniteQueryResponse,
+		string[],
+		string | null
+	>({
+		queryKey: ["urls"],
+		queryFn: ({ pageParam }) =>
+			getUrls({ pageSize: PAGE_SIZE, cursor: pageParam }),
+		initialPageParam: null,
+		getNextPageParam: (lastPage) => lastPage.meta.nextCursor,
+	});
 
 	const urls = data?.pages.flatMap((page) => page.urls) ?? [];
 	const isUrlsListEmpty = urls.length === 0;
@@ -84,8 +89,11 @@ export function ShortenedUrlList() {
 						))}
 						{hasNextPage && <div ref={loadMoreRef} style={{ height: 1 }} />}
 						{isFetchingNextPage && (
-							<div className="text-center py-2 text-xs text-gray-400">
-								Carregando mais...
+							<div className="flex items-center justify-center gap-2">
+								<Spinner size={16} className="text-gray-400 animate-spin" />
+								<div className="text-center py-2 text-xs text-gray-400">
+									Carregando mais...
+								</div>
 							</div>
 						)}
 					</ul>
@@ -101,12 +109,23 @@ export function ShortenedUrlList() {
 	}
 
 	return (
-		<section className="w-full flex flex-col bg-white p-6 rounded-lg lg:self-start">
+		<div className="w-full flex flex-col bg-white p-6 rounded-lg lg:self-start">
 			<header className="flex items-center justify-between">
 				<p className="text-lg text-gray-600 leading-lg font-bold">Meus links</p>
 				<ActionButton icon={DownloadSimple}>Baixar CSV</ActionButton>
 			</header>
-			{isUrlsListEmpty ? renderEmptyState() : renderUrlList()}
-		</section>
+			{isLoadingUrls ? (
+				<div className="flex gap-2 justify-center items-center p-8">
+					<Spinner size={32} className="text-gray-400 animate-spin" />
+					<p className="uppercase text-gray-500 text-xs leading-xs">
+						Carregando links...
+					</p>
+				</div>
+			) : isUrlsListEmpty ? (
+				renderEmptyState()
+			) : (
+				renderUrlList()
+			)}
+		</div>
 	);
 }

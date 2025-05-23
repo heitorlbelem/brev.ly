@@ -47,7 +47,7 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 					target="_blank"
 					className="text-blue-base border-b border-b-transparent truncate text-md leading-md font-semibold hover:text-blue-dark hover:cursor-pointer hover:border-b-blue-dark"
 				>
-					{`${env.VITE_API_URL}/${url.shortenedUrl}`}
+					{`${env.VITE_FRONTEND_URL}/${url.shortenedUrl}`}
 				</Link>
 				<span className="text-gray-500 truncate text-sm leading-sm">
 					{url.originalUrl}
@@ -66,7 +66,9 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 						icon={Copy}
 						onClick={() =>
 							url.shortenedUrl &&
-							navigator.clipboard.writeText(url.shortenedUrl)
+							navigator.clipboard.writeText(
+								`${env.VITE_FRONTEND_URL}/${url.shortenedUrl}`,
+							)
 						}
 					/>
 					<ActionButton
