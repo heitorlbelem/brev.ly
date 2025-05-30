@@ -3,6 +3,7 @@ import { createContext, useContext } from "react";
 export interface InputContainerContextProps {
 	id: string;
 	prefix?: string;
+	hasError: boolean;
 }
 
 export const InputContainerContext = createContext<

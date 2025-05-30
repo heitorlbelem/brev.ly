@@ -8,8 +8,13 @@
   font-family: "Open Sans", sans-serif;
 }
 
-.input-wrapper:focus-within label {
+.input-wrapper:focus-within label[data-has-error="false"] {
   color: var(--color-blue-base);
+  font-weight: bold;
+}
+
+.input-wrapper:focus-within label[data-has-error="true"] {
+  color: var(--color-danger);
   font-weight: bold;
 }
 

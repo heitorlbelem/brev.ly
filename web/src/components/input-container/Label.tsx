@@ -6,7 +6,8 @@ export function Label({ children }: { children: ReactNode }) {
 	return (
 		<label
 			htmlFor={ctx.id}
-			className="text-xs text-gray-500 leading-xs uppercase peer-focus:text-blue-base peer-focus:font-bold"
+			data-has-error={ctx.hasError}
+			className={`${ctx.hasError ? "text-danger" : "text-gray-500"} font-bold text-xs leading-xs uppercase`}
 		>
 			{children}
 		</label>

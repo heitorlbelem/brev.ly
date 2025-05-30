@@ -53,8 +53,8 @@ export function ShortenedUrlListItem({ url }: ShortenedUrlListItemProps) {
 							Link copiado com sucesso
 						</p>
 						<span className="font-normal text-sm text-blue-base">
-							O link {url.shortenedUrl} foi copiado para a área de
-							transferência.
+							O link <strong>{url.shortenedUrl}</strong> foi copiado para a área
+							de transferência.
 						</span>
 					</div>
 				</div>,

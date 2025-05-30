@@ -2,6 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { useMutation } from "@tanstack/react-query";
+import { Spinner } from "phosphor-react";
+import { toast } from "sonner";
 import { z } from "zod";
 import { createShortenedUrl } from "../api/create-shortened-url";
 import * as InputContainer from "../components/input-container";
@@ -41,6 +43,27 @@ export function ShortenedUrlForm() {
 			queryClient.invalidateQueries({ queryKey: ["urls"] });
 			reset();
 		},
+		onError: () => {
+			toast.error(
+				<div className="flex w-full h-full items-center gap-2">
+					<div className="flex flex-col gap-1">
+						<p className="text-sm font-bold text-danger">
+							{" "}
+							URL encurtada já cadastrada
+						</p>
+					</div>
+				</div>,
+				{
+					style: {
+						backgroundColor: "#f29db2",
+						color: "#white",
+						boxShadow: "none",
+						border: "none",
+						gap: "1rem",
+					},
+				},
+			);
+		},
 	});
 
 	const handleCreateShortenedUrl = async (data: CreateShortenedUrlFormType) => {
@@ -56,7 +79,7 @@ export function ShortenedUrlForm() {
 			<p className="text-lg text-gray-600 leading-lg font-bold">Novo link</p>
 
 			<div className="flex flex-col gap-4">
-				<InputContainer.Root id="originalUrl">
+				<InputContainer.Root id="originalUrl" hasError={!!errors.originalUrl}>
 					<InputContainer.Label>link original</InputContainer.Label>
 					<InputContainer.Input
 						type="text"
@@ -70,7 +93,11 @@ export function ShortenedUrlForm() {
 					)}
 				</InputContainer.Root>
 
-				<InputContainer.Root id="shortenedUrl" prefix="brev.ly/">
+				<InputContainer.Root
+					id="shortenedUrl"
+					prefix="brev.ly/"
+					hasError={!!errors.shortenedUrl}
+				>
 					<InputContainer.Label>link encurtado</InputContainer.Label>
 					<InputContainer.Input type="text" {...register("shortenedUrl")} />
 					{errors.shortenedUrl?.message && (
@@ -83,9 +110,17 @@ export function ShortenedUrlForm() {
 
 			<button
 				type="submit"
-				className="w-full bg-blue-base text-white p-4 rounded-lg text-md leading-md font-semibold hover:bg-blue-dark hover:cursor-pointer"
+				disabled={mutation.isPending}
+				className="disabled:opacity-50 w-full bg-blue-base text-white p-4 rounded-lg text-md leading-md font-semibold hover:bg-blue-dark hover:cursor-pointer"
 			>
-				Salvar link
+				{mutation.isPending ? (
+					<div className="flex items-center justify-center gap-2">
+						<Spinner className="animate-spin" size={20} />
+						<span>Salvando...</span>
+					</div>
+				) : (
+					<span>Salvar link</span>
+				)}
 			</button>
 		</form>
 	);
